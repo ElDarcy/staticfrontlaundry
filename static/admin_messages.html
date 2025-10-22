@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Contact Messages</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Arial;
+      background:url('https://images.unsplash.com/photo-1696546761269-a8f9d2b80512?fm=jpg&q=60&w=3000') no-repeat center/cover fixed;
+      overflow-x:hidden;
+      padding-top: 20px;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.3);
+      z-index:0;
+    }
+    .floating-bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(174, 200, 226, 0.416);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(31, 31, 31, 0.2);
+      pointer-events: none;
+      animation: floatBubble linear infinite alternate;
+      z-index: 1;
+    }
+    .bubble1  { width:120px; height:120px; top:10%; left:8%;   animation: floatBubble 8s ease-in-out infinite; }
+    .bubble2  { width:200px; height:200px; bottom:25%; left:12%; animation: floatBubble 5s ease-in-out infinite 2s;}
+    .bubble3  { width:90px;  height:90px;  top:5%;  left:75%;  animation: floatBubble 6s ease-in-out infinite 2s; }
+    .bubble4  { width:150px; height:150px; bottom:20%; right:20%; animation: floatBubble 10s ease-in-out infinite 4s; }
+    .bubble5  { width:180px; height:180px; bottom:2%; left:8%; animation: floatBubble 7s ease-in-out infinite 4s; }
+    .bubble6  { width:100px; height:100px; top:50%; right:5%;   animation: floatBubble 9s ease-in-out infinite 3s; }
+    .bubble7  { width:130px; height:130px; bottom:8%; right:8%; animation: floatBubble 3s ease-in-out infinite 3s; }
+    .bubble8  { width:160px; height:160px; top:38%; left:55%; animation: floatBubble 3s ease-in-out infinite 3s; }
+    .bubble9  { width:110px; height:110px; top:18%; left:20%; animation: floatBubble 5s ease-in-out infinite 3s; }
+    .bubble10 { width:140px; height:140px; bottom:15%; left:65%; animation: floatBubble 2s ease-in-out infinite 2s; }
+    .bubble11 { width:170px; height:170px; bottom:0%; right:60%; animation: floatBubble 3s ease-in-out infinite 1s; }
+    .bubble12 { width:100px; height:100px; bottom:0%; left:25%; animation: floatBubble 8s ease-in-out infinite 4s; }
+    .bubble13 { width:190px; height:190px; top:4%; right:5%; animation: floatBubble 6s ease-in-out infinite 2s; }
+    .bubble14 { width:80px;  height:80px;  top:60%; left:30%; animation: floatBubble 5s ease-in-out infinite 5s; }
+    .bubble15 { width:150px; height:150px; bottom:90%; right:45%; animation: floatBubble 3s ease-in-out infinite 2s; }
+    @keyframes floatBubble {
+        0%   { transform: translateY(0) translateX(0); opacity: 0.7; }
+        50%  { transform: translateY(-40px) translateX(20px); opacity: 1; }
+        100% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      position:relative;z-index:10;
+    }
+    h2 {
+      margin-bottom: 15px;
+      color: #1e3a8a;
+      text-align: center;
+    }
+    .search-bar {
+      display: flex;
+      margin-bottom: 15px;
+      gap: 8px;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+    }
+    .btn-alt {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .message-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .message-header strong {
+      color: #111827;
+    }
+    .message-body {
+      margin-top: 5px;
+      color: #374151;
+    }
+    .reply-box {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+    }
+    .reply-box input {
+      flex: 1;
+      padding: 7px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .reply-display {
+      background: #eef2ff;
+      border-left: 4px solid #2563eb;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+    <!-- bubbles -->
+  <div class="floating-bubble bubble1"></div><div class="floating-bubble bubble2"></div>
+  <div class="floating-bubble bubble3"></div><div class="floating-bubble bubble4"></div>
+  <div class="floating-bubble bubble5"></div><div class="floating-bubble bubble6"></div>
+  <div class="floating-bubble bubble7"></div><div class="floating-bubble bubble8"></div>
+  <div class="floating-bubble bubble9"></div><div class="floating-bubble bubble10"></div>
+  <div class="floating-bubble bubble11"></div><div class="floating-bubble bubble12"></div>
+  <div class="floating-bubble bubble13"></div><div class="floating-bubble bubble14"></div>
+  <div class="floating-bubble bubble15"></div>
+
+  <div class="container">
+    <div class="top-buttons">
+      <h2><i class="fas fa-inbox"></i> Contact Messages</h2>
+      <button class="btn btn-alt" onclick="location.href='admin.html'">
+        <i class="fas fa-arrow-left"></i> Back to Admin
+      </button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search by name, email, or message...">
+      <button class="btn btn-primary" onclick="renderMessages()">Search</button>
+    </div>
+
+    <div id="message-list"></div>
+  </div>
+
+  <script>
+    function getMessages() {
+      return JSON.parse(localStorage.getItem("messages")) || [];
+    }
+
+    function saveMessages(messages) {
+      localStorage.setItem("messages", JSON.stringify(messages));
+    }
+
+    function deleteMessage(id) {
+      if (!confirm("Are you sure you want to delete this message?")) return;
+      const messages = getMessages().filter(m => m.id !== id);
+      saveMessages(messages);
+      renderMessages();
+    }
+
+    function replyMessage(id) {
+      const input = document.getElementById("reply-" + id);
+      const reply = input.value.trim();
+      if (!reply) return alert("Please type a reply first.");
+
+      const messages = getMessages();
+      const msg = messages.find(m => m.id === id);
+      if (msg) {
+        msg.reply = reply;
+        msg.status = "replied";
+        saveMessages(messages);
+        alert("Reply saved!");
+        renderMessages();
+      }
+    }
+
+    function renderMessages() {
+      const list = document.getElementById("message-list");
+      const search = document.getElementById("search").value.toLowerCase();
+      const messages = getMessages()
+        .filter(m =>
+          m.name.toLowerCase().includes(search) ||
+          m.email.toLowerCase().includes(search) ||
+          m.message.toLowerCase().includes(search)
+        )
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      if (messages.length === 0) {
+        list.innerHTML = `<p style="color:gray;">No messages found.</p>`;
+        return;
+      }
+
+      list.innerHTML = messages.map(m => `
+        <div class="message-card">
+          <div class="message-header">
+            <strong>${m.name}</strong>
+            <small>${new Date(m.created_at).toLocaleString()}</small>
+          </div>
+          <p><i class="fas fa-envelope"></i> ${m.email}</p>
+          <div class="message-body">${m.message}</div>
+          ${m.reply ? `
+            <div class="reply-display">
+              <strong>Admin Reply:</strong>
+              <p>${m.reply}</p>
+            </div>
+          ` : `
+            <div class="reply-box">
+              <input type="text" id="reply-${m.id}" placeholder="Type your reply...">
+              <button class="btn btn-primary" onclick="replyMessage(${m.id})">Reply</button>
+            </div>
+          `}
+          <div style="margin-top:8px;">
+            <button class="btn btn-danger" onclick="deleteMessage(${m.id})">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener("DOMContentLoaded", renderMessages);
+  </script>
+</body>
+</html>
